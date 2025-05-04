@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEXUS | Premium Roblox Executor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2568ef;
+            --primary-dark: #0d47c2;
+            --primary-light: #4d8eff;
+            --secondary: #00f2fe;
+            --dark: #0a0f1f;
+            --darker: #050a15;
+            --light: #f0f4ff;
+            --accent: #00f2fe;
+            --text: rgba(240, 244, 255, 0.95);
+            --text-secondary: rgba(240, 244, 255, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        h1, h2, h3, h4, .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(12px);
+            background: rgba(10, 15, 31, 0.7);
+            border-bottom: 1px solid rgba(37, 104, 239, 0.1);
+        }
+        
+        header.scrolled {
+            padding: 0.8rem 5%;
+            background: rgba(5, 10, 21, 0.98);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .logo .pulse {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-left: 8px;
+            box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7);
+            animation: pulse-animation 2s infinite;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav ul li {
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 20px rgba(37, 104, 239, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(37, 104, 239, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(37, 104, 239, 0.5);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #00b4fe);
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+        
+        .btn-accent:hover {
+            box-shadow: 0 8px 30px rgba(0, 242, 254, 0.5);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        /* Page Transition */
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .page-transition.active {
+            opacity: 1;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(37, 104, 239, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 104, 239, 0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.05) 0%, transparent 60%);
+            animation: rotate 25s linear infinite reverse;
+        }
+        
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .hero-text {
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, var(--light), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .hero-image {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(37, 104, 239, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .hero-image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 104, 239, 0.2), transparent);
+            z-index: 1;
+        }
+        
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            animation: fadeIn 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+        
+        .stat-item {
+            background: rgba(37, 104, 239, 0.1);
+            border: 1px solid rgba(37, 104, 239, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            min-width: 180px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(37, 104, 239, 0.2);
+            box-shadow: 0 10px 30px rgba(37, 104, 239, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 8rem 5%;
+            position: relative;
+            background: linear-gradient(to bottom, var(--darker), var(--dark));
+        }
+        
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAyKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==');
+            opacity: 0.3;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: linear-gradient(145deg, rgba(37, 104, 239, 0.1), rgba(10, 15, 31, 0.3));
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(37, 104, 239, 0.1);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 104, 239, 0.2), transparent);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(37, 104, 239, 0.3);
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        /* Download Section */
+        .download {
+            padding: 8rem 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to bottom, var(--dark), var(--darker));
+        }
+        
+        .download::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(37, 104, 239, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .download-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .download-card {
+            background: linear-gradient(145deg, rgba(37, 104, 239, 0.1), rgba(10, 15, 31, 0.3));
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(37, 104, 239, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+        
+        .download-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .download-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .download-btn {
+            min-width: 220px;
+            padding: 1.2rem 2rem;
+            font-size: 1rem;
+        }
+        
+        .os-requirements {
+            margin-top: 3rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            padding: 5rem 5% 2rem;
+            position: relative;
+            border-top: 1px solid rgba(37, 104, 239, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .footer-links a i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes pulse-animation {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 242, 254, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 242, 254, 0);
+            }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 6rem;
+            }
+            
+            .hero-text {
+                margin-bottom: 3rem;
+                max-width: 100%;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .stats {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                height: 400px;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-text h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .download-card {
+                padding: 3rem 2rem;
+            }
+            
+            .download-title {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .stats {
+                gap: 1rem;
+            }
+            
+            .stat-item {
+                min-width: calc(50% - 1rem);
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .download-btn {
+                width: 100%;
+            }
+            
+            .hero-image {
+                height: 300px;
+            }
+            
+            .stat-item {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <a href="#" class="logo">VEXUS<span>.</span><span class="pulse"></span></a>
+        <nav>
+            <ul>
+                <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
+                <li><a href="#download"><i class="fas fa-download"></i> Download</a></li>
+                <li><a href="#"><i class="fab fa-discord"></i> Community</a></li>
+                <li><a href="#" class="btn btn-accent"><i class="fas fa-rocket"></i> Get Started</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>ULTIMATE ROBLOX EXECUTION</h1>
+                <p>VEXUS delivers unmatched performance with cutting-edge technology for the most demanding Roblox scripts. Experience the future of exploiting today.</p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn btn-accent"><i class="fas fa-download"></i> Download Now</a>
+                    <a href="docs/integrity.html" class="btn" id="doc-btn"><i class="fas fa-book"></i> Documentation</a>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="download-counter">0</div>
+                        <div class="stat-label">Downloads</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0.1s</div>
+                        <div class="stat-label">Injection</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-container">
+                    <img src="https://i.imgur.com/JqYeZRn.png" alt="VEXUS Interface" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2 class="section-title">UNMATCHED CAPABILITIES</h2>
+            <p class="section-subtitle">VEXUS is packed with powerful features designed for performance and reliability</p>
+        </div>
+        
+        <div class="features-container">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <h3>Extreme Performance</h3>
+                <p>Optimized execution engine delivers the fastest script performance with minimal resource usage.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Advanced Protection</h3>
+                <p>Multi-layered anti-detection system keeps you completely undetectable.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-code"></i></div>
+                <h3>Full Lua Support</h3>
+                <p>Complete implementation of Lua 5.4 with all standard libraries and extensions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-plug"></i></div>
+                <h3>Plugin Architecture</h3>
+                <p>Extend functionality with community plugins or create your own with our SDK.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Cross-Platform</h3>
+                <p>Available for Windows and Android with feature parity across all platforms.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                <h3>Secure Environment</h3>
+                <p>Built-in anti-logging and anti-virus false positive protection.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Download Section -->
+    <section class="download" id="download">
+        <div class="download-content">
+            <div class="download-card">
+                <h2 class="download-title">GET VEXUS NOW</h2>
+                <p class="download-subtitle">Join thousands of users experiencing the most advanced Roblox executor available</p>
+                
+                <div class="download-buttons">
+                    <a href="#" class="btn btn-accent download-btn"><i class="fab fa-windows"></i> Windows</a>
+                    <a href="#" class="btn btn-accent download-btn"><i class="fab fa-android"></i> Android</a>
+                    <a href="docs/integrity.html" class="btn download-btn" id="doc-btn-2"><i class="fas fa-book"></i> Documentation</a>
+                </div>
+                
+                <p class="os-requirements">
+                    <i class="fas fa-info-circle"></i> System Requirements: Windows 10/11 64-bit | Android 8.0+
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>VEXUS</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                    The most advanced Roblox executor, redefining performance and reliability.
+                </p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#features"><i class="fas fa-chevron-right"></i> Features</a></li>
+                    <li><a href="#download"><i class="fas fa-chevron-right"></i> Download</a></li>
+                    <li><a href="docs/integrity.html"><i class="fas fa-chevron-right"></i> Documentation</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Script Hub</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Plugins</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> API Reference</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Terms</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Refunds</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 VEXUS Executor. Not affiliated with Roblox Corporation. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Your Firebase configuration (replace with your actual config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxxfv5Hw88T1-tubj7NxmZ0n_-oTxxXCM",
+  authDomain: "vexuscounter.firebaseapp.com",
+  databaseURL: "https://vexuscounter-default-rtdb.firebaseio.com",
+  projectId: "vexuscounter",
+  storageBucket: "vexuscounter.firebasestorage.app",
+  messagingSenderId: "474910061102",
+  appId: "1:474910061102:web:cbc9ca9167a6804ffb65bf"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Smooth page transition for documentation links
+        function setupDocLinks() {
+            document.querySelectorAll('#doc-btn, #doc-btn-2, .footer-links a[href="docs/integrity.html"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (!this.target || this.target !== '_blank') {
+                        e.preventDefault();
+                        
+                        // Create loading overlay
+                        const overlay = document.createElement('div');
+                        overlay.className = 'page-transition active';
+                        overlay.innerHTML = '<div class="spinner"></div>';
+                        document.body.appendChild(overlay);
+                        
+                        setTimeout(() => {
+                            window.location.href = this.href;
+                        }, 500);
+                    }
+                });
+            });
+        }
+
+        // Download counter functionality
+        function setupDownloadCounter() {
+            const downloadCounter = document.getElementById('download-counter');
+            const downloadButtons = document.querySelectorAll('.download-btn:not(#doc-btn-2)');
+            const downloadsRef = database.ref('downloads/vexus');
+            
+            downloadsRef.on('value', (snapshot) => {
+                const count = snapshot.val() || 0;
+                animateCounterUpdate(downloadCounter, count);
+            });
+            
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    downloadsRef.transaction((current) => {
+                        return (current || 0) + 1;
+                    });
+                });
+            });
+        }
+
+        // Smooth counter animation
+        function animateCounterUpdate(element, target) {
+            const current = parseInt(element.textContent.replace(/,/g, '')) || 0;
+            target = parseInt(target);
+            
+            if (current === target) return;
+            
+            const duration = 1000;
+            const startTime = performance.now();
+            
+            function updateCounter(timestamp) {
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                const value = Math.floor(current + (target - current) * progress);
+                element.textContent = value.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.feature-card, .section-title, .section-subtitle, .download-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state for animated elements
+        document.querySelectorAll('.feature-card, .section-title, .section-subtitle, .download-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+
+        // Stats animation
+        const animateStats = function() {
+            const statItems = document.querySelectorAll('.stat-item');
+            const windowHeight = window.innerHeight;
+            const heroSection = document.querySelector('.hero');
+            const heroPosition = heroSection.getBoundingClientRect().top;
+            
+            if (heroPosition < windowHeight - 200) {
+                statItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                    }, index * 200);
+                });
+                
+                window.removeEventListener('scroll', animateStats);
+            }
+        };
+
+        // Initialize everything
+        window.addEventListener('DOMContentLoaded', function() {
+            setupDownloadCounter();
+            setupDocLinks();
+            animateOnScroll();
+            animateStats();
+        });
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('scroll', animateStats);
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('load', animateStats);
+    </script>
+</body>
+</html>
